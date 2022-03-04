@@ -4,7 +4,13 @@ from test_framework import generic_test
 
 def is_binary_tree_bst(tree: BinaryTreeNode) -> bool:
     # TODO - you fill in here.
-    return True
+    def traverse(tree: BinaryTreeNode, low=float('-inf'), high=float('inf')):
+        if not tree:
+            return True
+        elif not low <= tree.data <= high:
+            return False
+        return traverse(tree.left, low, tree.data) and traverse(tree.right, tree.data, high)
+    return traverse(tree)
 
 
 if __name__ == '__main__':

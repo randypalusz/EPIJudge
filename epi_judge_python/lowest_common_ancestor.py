@@ -11,7 +11,25 @@ from test_framework.test_utils import enable_executor_hook
 def lca(tree: BinaryTreeNode, node0: BinaryTreeNode,
         node1: BinaryTreeNode) -> Optional[BinaryTreeNode]:
     # TODO - you fill in here.
-    return None
+    # will return tuple: (int, BinaryTreeNode) -> (count of node0 + node1 in subtree, ancestor)
+    def lca_recursion(current_tree: BinaryTreeNode):
+        if not current_tree:
+            return (0, None)
+        l_result = lca_recursion(current_tree.left)
+        # need these == 2 checks:
+        #   if not checking for this, then when going up the stack, we will keep seeing that
+        #   the num_target_nodes == 2, and the ancestor will keep getting updated, thus
+        #   returning not the LCA, but the root every time
+        if l_result[0] == 2:
+            return l_result
+        r_result = lca_recursion(current_tree.right)
+        if r_result[0] == 2:
+            return r_result
+        num_target_nodes = (
+            l_result[0] + r_result[0] + (node0, node1).count(current_tree))
+        return (num_target_nodes, current_tree if num_target_nodes == 2 else None)
+
+    return lca_recursion(tree)[1]
 
 
 @enable_executor_hook

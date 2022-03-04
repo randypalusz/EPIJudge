@@ -3,7 +3,12 @@ from test_framework import generic_test
 
 def parity(x: int) -> int:
     # TODO - you fill in here.
-    return 0
+    numOddBits = 0
+    while x:
+        isOdd = x & 1
+        numOddBits += isOdd
+        x = x >> 1
+    return int(numOddBits % 2 != 0)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,8 @@
+# Binary Trees
+- Recursion to traverse entire Tree
+  - Normally make a helper function that will take in a node to the tree, recurse this helper function through the entire tree
+  - For this helper function, input parameters will be info that the next lowest node needs from this node
+    - this is info that child nodes need from parent nodes, e.g. in sum_root_to_leaf, the child nodes need the sum up to that point, so helper(node, sum_to_node)
+  - Helper function  return parameters will be information that parent nodes need from child nodes
+    - e.g. in sum_root_to_leaf, return param will be the running addition of sum_to_node when hitting each leaf
+    - e.g. in least_common_ancestor, parent node doesn't know how many target nodes are found in their subtree until traversed, thus need this to be a return parameter

@@ -1,9 +1,29 @@
+import heapq
 from typing import List
 
 from test_framework import generic_test
 
 
 def merge_sorted_arrays(sorted_arrays: List[List[int]]) -> List[int]:
+    out = []
+    min_heap = []
+    iters = [iter(x) for x in sorted_arrays]
+    for idx, iterator in enumerate(iters):
+        element = next(iterator, None)
+        if element is not None:
+            heapq.heappush(min_heap, (element, idx))
+
+    while min_heap:
+        element, iterator_index = heapq.heappop(min_heap)
+        out.append(element)
+        current_iterator = iters[iterator_index]
+        next_element = next(current_iterator, None)
+        if next_element is not None:
+            heapq.heappush(min_heap, (next_element, iterator_index))
+    return out
+
+
+def bf_merge_sorted_arrays(sorted_arrays: List[List[int]]) -> List[int]:
     # TODO - you fill in here.
     ret = []
     # array keeping track of the given indices

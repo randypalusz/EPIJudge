@@ -1,8 +1,6 @@
 from binary_tree_node import BinaryTreeNode
 from test_framework import generic_test
 
-# mine
-
 
 def is_balanced_binary_tree(tree: BinaryTreeNode) -> bool:
     def check_balanced(tree: BinaryTreeNode):
@@ -21,6 +19,21 @@ def is_balanced_binary_tree(tree: BinaryTreeNode) -> bool:
         return (balanced, height)
 
     return check_balanced(tree)[0]
+
+
+# alternate, but slower implementation
+def tis_balanced_binary_tree(tree: BinaryTreeNode) -> bool:
+    # will return height up to this point and whether the tree is balanced up to that point
+    def helper(node: BinaryTreeNode):
+        if not node:
+            return (True, 0)
+        l_result = helper(node.left)
+        r_result = helper(node.right)
+        new_height = max(l_result[1], r_result[1]) + 1
+        is_balanced = (abs(l_result[1] - r_result[1])
+                       <= 1) and l_result[0] and r_result[0]
+        return (is_balanced, new_height)
+    return helper(tree)[0]
 
 
 if __name__ == '__main__':
